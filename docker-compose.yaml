@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  sgu-config-service:
+    image: sgu-config-service
+    build:
+      context: ./sgu-config-service
+    container_name: config-service
+    ports:
+      - "8888:8888"
+    networks:
+      - sgu-networks
+    volumes:
+      - config-repo:/tmp/config-repo
+
+volumes:
+  config-repo:
+
+networks:
+  sgu-networks:
+    external: true

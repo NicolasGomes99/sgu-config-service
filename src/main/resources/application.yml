@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: sgu-config-service
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/lmtsufape/sgu-config-service
+          default-label: main
+          clone-on-start: true
+          basedir: /tmp/config-repo
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info
+
+server:
+  port: 8888

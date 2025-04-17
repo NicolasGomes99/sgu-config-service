@@ -1,0 +1,57 @@
+arquivo:
+  diretorio-upload: /app/storage
+
+server:
+  port: 8081
+  error:
+    include-stacktrace: never
+
+spring:
+  application:
+    name: sgu-auth-service
+  web:
+    locale-resolver: fixed
+    locale: pt_BR
+  devtools:
+    livereload:
+      enabled: true
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 20MB
+  datasource:
+    url: jdbc:postgresql://localhost:5432/sgu
+    username: postgres
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: ${keycloak.auth-server-url}/realms/${keycloak.realm}
+            user-name-attribute: preferred_username
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${spring.security.oauth2.client.provider.keycloak.issuer-uri}/protocol/openid-connect/certs
+springdoc:
+  api-docs:
+    path: /api-doc/docs
+  swagger-ui:
+    path: /api-doc/swagger.html
+
+keycloak:
+  auth-server-url: http://localhost:9090/
+  realm: sgu-ufape
+  client-secret: iIueertdxnoPmpoA1Fsy6BfjMVbEa1d5
+  client-id: sgu-application
+
+logging:
+  level:
+    org:
+      springframework: DEBUG
