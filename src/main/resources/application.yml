@@ -9,6 +9,7 @@ spring:
           default-label: main
           clone-on-start: true
           basedir: /tmp/config-repo
+          search-paths: src/main/resources/config-repo
 
 management:
   endpoints:
