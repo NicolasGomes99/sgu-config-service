@@ -1,6 +1,13 @@
+# Para rodar localmente sem o git utilize o comando comentado abaixo no lugar do config.server.git,
+# isso é recomendado para desenvolvimento, já que dá para mudar dinamicamente o arquivo sem precisar fazer o commit:
+
 spring:
   application:
     name: sgu-config-service
+
+#  profiles:
+#    active: native
+
   cloud:
     config:
       server:
@@ -10,8 +17,7 @@ spring:
           clone-on-start: true
           basedir: /tmp/config-repo
           search-paths: src/main/resources/config-repo
-# Para rodar localmente sem o git utilize o comando abaixo no lugar do config.server.git,
-# isso é recomendado para desenvolvimento, já que dá para mudar dinamicamente o arquivo sem precisar fazer o commit:
+
 #  cloud:
 #    config:
 #      server:
