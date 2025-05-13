@@ -1,3 +1,5 @@
+arquivo:
+  diretorio-upload: /app/storage
 server:
   port: 8082
   error:
