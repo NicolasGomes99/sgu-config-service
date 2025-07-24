@@ -1,23 +1,22 @@
-FROM openjdk:22-jdk-slim AS build
+ARG BASE_IMAGE=openjdk:24-jdk-slim
 
-RUN apt-get update && apt-get install -y maven
-
+FROM ${BASE_IMAGE} AS build
 WORKDIR /app
 
-COPY pom.xml .
+COPY mvnw ./
+COPY .mvn .mvn
+COPY pom.xml ./
+RUN chmod +x mvnw
 
-RUN mvn dependency:go-offline -B
+RUN --mount=type=cache,target=/root/.m2 \
+    ./mvnw dependency:go-offline -B
 
 COPY src ./src
+RUN --mount=type=cache,target=/root/.m2 \
+    ./mvnw clean install -DskipTests
 
-RUN mvn clean install -DskipTests
-
-FROM openjdk:22-jdk-slim
-
+FROM ${BASE_IMAGE} AS runtime
 WORKDIR /app
 
 COPY --from=build /app/target/*.jar app.jar
-
-EXPOSE 8888
-
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java","-jar","app.jar"]
