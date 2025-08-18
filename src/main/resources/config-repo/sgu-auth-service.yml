@@ -58,7 +58,7 @@ logging:
       springframework: DEBUG
 
 common:
-  emailEnabled: false
+  emailEnabled: true
 
 ---
 spring:
