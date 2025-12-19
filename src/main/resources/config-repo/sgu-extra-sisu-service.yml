@@ -35,14 +35,6 @@ spring:
   security:
     oauth2:
       client:
-
-        registration:
-          extra-sisu-client:
-            provider: keycloak
-            client-id: extra-sisu-application
-            client-secret: 6ql1h7xJfNmH0yCQuZsQFPTrkY3EKQHO 
-            authorization-grant-type: client_credentials
-            scope: openid
         provider:
           keycloak:
             issuer-uri: ${keycloak.auth-server-url}/realms/${keycloak.realm}
@@ -82,8 +74,6 @@ springdoc:
 keycloak:
   auth-server-url: http://localhost:9090/
   realm: sgu-ufape
-  client-id: extra-sisu-application
-  client-secret: 6ql1h7xJfNmH0yCQuZsQFPTrkY3EKQHO 
 
 common:
   front: http://localhost:3000/
