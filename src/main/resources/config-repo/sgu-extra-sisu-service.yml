@@ -21,7 +21,7 @@ spring:
       max-request-size: 20MB
   
   datasource:
-    url: jdbc:postgresql://localhost:5436/sgu_extra_sisu_db
+    url: jdbc:postgresql://localhost:5432/sgu_extra_sisu_db
     username: postgres
     password: 55555 
   
