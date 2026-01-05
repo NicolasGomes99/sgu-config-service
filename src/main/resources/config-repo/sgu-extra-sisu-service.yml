@@ -9,6 +9,10 @@ server:
 spring:
   application:
     name: sgu-extra-sisu-service
+
+  main:
+    allow-bean-definition-overriding: true
+
   web:
     locale-resolver: fixed
     locale: pt_BR
@@ -23,7 +27,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/sgu_extra_sisu_db
     username: postgres
-    password: 55555 
+    password: 55555
   
   jpa:
     hibernate:
@@ -43,13 +47,17 @@ spring:
         jwt:
           jwk-set-uri: ${spring.security.oauth2.client.provider.keycloak.issuer-uri}/protocol/openid-connect/certs
   
-  cloud:
-    openfeign:
-      client:
-        config:
-          default:
-            connect-timeout: 5000
-            read-timeout: 20000
+cloud:
+  openfeign:
+    # NOVA CONFIGURAÇÃO PARA HABILITAR PATCH
+    httpclient:
+      hc5:
+        enabled: true
+    client:
+      config:
+        default:
+          connect-timeout: 5000
+          read-timeout: 20000
 
 # Configuração Feign Client
 authClient:
@@ -118,5 +126,5 @@ eureka:
     fetchRegistry: true
   instance:
     hostname: sgu-extra-sisu-service
-    prefer-ip-address: false
+    prefer-ip-address: true
 
