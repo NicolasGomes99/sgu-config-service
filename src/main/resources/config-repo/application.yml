@@ -1,0 +1,21 @@
+# Configurações Globais
+
+server:
+  # Garante que requisições em andamento terminem antes do container desligar
+  shutdown: graceful
+
+management:
+  endpoints:
+    web:
+      exposure:
+        # Habilita os endpoints de saúde, informações e métricas
+        include: health, info, prometheus
+  endpoint:
+    health:
+      probes:
+        # Habilita as sondas de Liveness e Readiness para o Docker/Kubernetes
+        enabled: true
+  metrics:
+    tags:
+      # Adiciona o nome do serviço em todas as métricas para facilitar os filtros no Grafana
+      application: ${spring.application.name}
