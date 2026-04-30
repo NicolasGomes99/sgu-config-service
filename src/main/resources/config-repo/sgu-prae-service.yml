@@ -5,7 +5,8 @@ server:
   error:
     include-stacktrace: never
 spring:
-  application.name: sgu-prae-service
+  application:
+    name: sgu-prae-service
   web:
     locale-resolver: fixed
     locale: pt_BR
@@ -21,13 +22,21 @@ spring:
     username: postgres
     password: 55555
 
-
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  # Flyway
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 1
+    create-schemas: true
+    default-schema: public
+
   security:
     oauth2:
       client:
@@ -49,7 +58,6 @@ spring:
 authClient:
   base-url: http://gateway:8080/auth
   client-id: prae-application
-
 
 resilience4j:
   circuitbreaker:
@@ -73,12 +81,13 @@ keycloak:
 common:
   front: http://localhost:3000/, https://sgiufape.vercel.app/
 
-
 logging:
   level:
     org:
       springframework: DEBUG
 ---
+
+# PROFILE DOCKER
 spring:
   config:
     activate:
@@ -92,15 +101,22 @@ spring:
     url: jdbc:postgresql://backend-db:5432/prae
     username: postgres
     password: password
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+
   security:
     oauth2:
       resourceserver:
         jwt:
           jwk-set-uri: ${keycloak.auth-server-url}realms/${keycloak.realm}/protocol/openid-connect/certs
+
 keycloak:
   auth-server-url: http://keycloak:8080/
   realm: sgu-ufape
-
 
 eureka:
   client:
