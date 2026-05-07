@@ -25,10 +25,19 @@ spring:
     password: password
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  # CONFIGURAÇÃO FLYWAY
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 1
+    create-schemas: true
+    default-schema: public
+
   security:
     oauth2:
       client:
@@ -61,6 +70,7 @@ common:
   emailEnabled: false
 
 ---
+# PROFILE DOCKER
 spring:
   config:
     activate:
@@ -74,6 +84,14 @@ spring:
     url: jdbc:postgresql://backend-db:5432/sgu
     username: postgres
     password: password
+
+  # Garante que as configurações do Flyway e JPA também sejam restritas quando rodando via Docker
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+
   security:
     oauth2:
       resourceserver:
@@ -84,7 +102,6 @@ keycloak:
   realm: sgu-ufape
   client-secret: iIueertdxnoPmpoA1Fsy6BfjMVbEa1d5
   client-id: sgu-application
-
 
 eureka:
   client:
